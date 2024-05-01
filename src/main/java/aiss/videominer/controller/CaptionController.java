@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/captions")
-public class  CaptionController {
+public class CaptionController {
 
     @Autowired
     CaptionRepository captionRepository;
