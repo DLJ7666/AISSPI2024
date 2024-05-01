@@ -1,17 +1,16 @@
 package aiss.videominer.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Caption")
 public class Caption {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("id")
-    private String id;
+    private long id;
 
     @JsonProperty("name")
     private String name;
@@ -20,11 +19,11 @@ public class Caption {
     private String language;
 
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -47,9 +46,9 @@ public class Caption {
     @Override
     public String toString() {
         return "Caption{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", language='" + language + '\'' +
+                "id='" + getId() + '\'' +
+                ", name='" + getName() + '\'' +
+                ", language='" + getLanguage() + '\'' +
                 '}';
     }
 }

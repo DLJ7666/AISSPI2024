@@ -9,8 +9,9 @@ import jakarta.validation.constraints.NotNull;
 public class Comment {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("id")
-    private String id;
+    private Long id;
 
     @JsonProperty("text")
     @Column(columnDefinition="TEXT")
@@ -24,11 +25,11 @@ public class Comment {
     @NotNull(message = "Comment author cannot be null")
     private User author;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
