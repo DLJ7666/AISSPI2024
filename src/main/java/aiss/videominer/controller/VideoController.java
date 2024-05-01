@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/videos")
-public class VideoController {
+public class  VideoController {
 
     @Autowired
     VideoRepository videoRepository;

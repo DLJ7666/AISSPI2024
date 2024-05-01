@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/controllers")
-public class ChannelController {
+public class  ChannelController {
 
     @Autowired
     ChannelRepository channelRepository;

@@ -21,7 +21,7 @@ public class CommentController {
     CommentRepository commentRepository;
 
     @Autowired
-    VideoRepository videoRepository;
+    VideoRepository  videoRepository;
 
     @Autowired
     UserRepository userRepository;
