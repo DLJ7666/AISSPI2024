@@ -24,7 +24,7 @@ public class CaptionController {
 
     //Obtener un subtítulo con su id
     //GET http://localhost:8080/videominer/captions/:id
-    @GetMapping("/:id")
+    @GetMapping("/{id}")
     public Caption findOne(@PathVariable Long id){
         Optional<Caption> caption = captionRepository.findById(id);
         return caption.get();

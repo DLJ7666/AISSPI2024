@@ -32,7 +32,7 @@ public class  VideoController {
 
     //Obtener un vídeo con su id
     //GET http://localhost:8080/videominer/videos/:id
-    @GetMapping("/:id")
+    @GetMapping("/{id}")
     public Video findOne(@PathVariable Long id){
         Optional<Video> video = videoRepository.findById(id);
         return video.get();

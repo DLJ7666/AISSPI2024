@@ -28,13 +28,12 @@ public class ChannelController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public Channel create(@Valid @RequestBody Channel channel){
-        Channel _channel = channelRepository.save(new Channel());
-        return _channel;
+        return channelRepository.save(new Channel());
     }
 
     //Obtener un canal con su id
     //GET http://localhost:8080/videominer/channels/:id
-    @GetMapping("/:id")
+    @GetMapping("/{id}")
     public Channel findOne(@PathVariable Long id){
         Optional<Channel> channel = channelRepository.findById(id);
         return channel.get();
