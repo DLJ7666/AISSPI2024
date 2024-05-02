@@ -1,5 +1,6 @@
 package aiss.videominer.controller;
 
+import aiss.videominer.exceptions.CaptionNotFoundException;
 import aiss.videominer.model.Caption;
 import aiss.videominer.repository.CaptionRepository;
 import aiss.videominer.repository.VideoRepository;
@@ -25,8 +26,9 @@ public class CaptionController {
     //Obtener un subtítulo con su id
     //GET http://localhost:8080/videominer/captions/:id
     @GetMapping("/{id}")
-    public Caption findOne(@PathVariable Long id){
+    public Caption findOne(@PathVariable Long id) throws CaptionNotFoundException {
         Optional<Caption> caption = captionRepository.findById(id);
+        if (caption.isEmpty()) {throw new CaptionNotFoundException(); }
         return caption.get();
     }
 

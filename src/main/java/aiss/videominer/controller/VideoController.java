@@ -1,5 +1,6 @@
 package aiss.videominer.controller;
 
+import aiss.videominer.exceptions.VideoNotFoundException;
 import aiss.videominer.model.Video;
 import aiss.videominer.repository.CaptionRepository;
 import aiss.videominer.repository.ChannelRepository;
@@ -33,8 +34,9 @@ public class  VideoController {
     //Obtener un vídeo con su id
     //GET http://localhost:8080/videominer/videos/:id
     @GetMapping("/{id}")
-    public Video findOne(@PathVariable Long id){
+    public Video findOne(@PathVariable Long id) throws VideoNotFoundException {
         Optional<Video> video = videoRepository.findById(id);
+        if(video.isEmpty()) {throw new VideoNotFoundException();}
         return video.get();
     }
 

@@ -1,5 +1,6 @@
 package aiss.videominer.controller;
 
+import aiss.videominer.exceptions.CommentNotFoundException;
 import aiss.videominer.model.Comment;
 import aiss.videominer.repository.CommentRepository;
 import aiss.videominer.repository.UserRepository;
@@ -29,8 +30,9 @@ public class CommentController {
     //Obtener un comentario con su id
     //GET http://localhost:8080/videominer/comments/:id
     @GetMapping("/{id}")
-    public Comment findOne(@PathVariable Long id){
+    public Comment findOne(@PathVariable Long id) throws CommentNotFoundException {
         Optional<Comment> comment = commentRepository.findById(id);
+        if(comment.isEmpty()) {throw new CommentNotFoundException();}
         return comment.get();
     }
 

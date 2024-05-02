@@ -1,6 +1,7 @@
 package aiss.videominer.controller;
 
 
+import aiss.videominer.exceptions.ChannelNotFoundException;
 import aiss.videominer.model.Channel;
 import aiss.videominer.repository.ChannelRepository;
 import aiss.videominer.repository.VideoRepository;
@@ -35,8 +36,9 @@ public class ChannelController {
     //Obtener un canal con su id
     //GET http://localhost:8080/videominer/channels/:id
     @GetMapping("/{id}")
-    public Channel findOne(@PathVariable Long id){
+    public Channel findOne(@PathVariable Long id) throws ChannelNotFoundException {
         Optional<Channel> channel = channelRepository.findById(id);
+        if (channel.isEmpty()) {throw new ChannelNotFoundException();}
         return channel.get();
     }
 
