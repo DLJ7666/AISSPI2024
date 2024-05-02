@@ -17,13 +17,21 @@ public class Comment {
     @Column(columnDefinition="TEXT")
     private String text;
 
+    @Column(name = "createdOn")
     @JsonProperty("createdOn")
     private String createdOn;
 
     @JsonProperty("author")
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name= "userId")
     @NotNull(message = "Comment author cannot be null")
     private User author;
+
+    public Comment(String text, String createdOn, User author) {
+        this.text = text;
+        this.createdOn = createdOn;
+        this.author = author;
+    }
 
     public Long getId() {
         return id;

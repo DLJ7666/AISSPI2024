@@ -17,6 +17,7 @@ public class Video {
     private Long id;
 
     @JsonProperty("name")
+    @Column(name="name")
     @NotEmpty(message = "Video name cannot be empty")
     private String name;
 
@@ -25,6 +26,7 @@ public class Video {
     private String description;
 
     @JsonProperty("releaseTime")
+    @Column(name="releaseTime")
     @NotEmpty(message = "Video release time cannot be empty")
     private String releaseTime;
 

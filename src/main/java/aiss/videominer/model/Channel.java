@@ -17,6 +17,7 @@ public class Channel {
     @JsonProperty("id")
     private Long id;
 
+    @Column(name="name")
     @JsonProperty("name")
     @NotEmpty(message = "Channel name cannot be empty")
     private String name;
@@ -26,6 +27,7 @@ public class Channel {
     private String description;
 
     @JsonProperty("createdTime")
+    @Column(name= "createdTime")
     @NotEmpty(message = "Channel creation time cannot be empty")
     private String createdTime;
 
@@ -35,7 +37,10 @@ public class Channel {
     @NotNull(message = "Channel videos cannot be null")
     private List<Video> videos;
 
-    public Channel() {
+    public Channel(String name, String description, String createdTime) {
+        this.name = name;
+        this.description = description;
+        this.createdTime = createdTime;
         this.videos = new ArrayList<>();
     }
 

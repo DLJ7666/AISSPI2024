@@ -18,12 +18,15 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(name="name")
     @JsonProperty("name")
     private String name;
 
+    @Column(name="user_link")
     @JsonProperty("user_link")
     private String user_link;
 
+    @Column(name="picture_link")
     @JsonProperty("picture_link")
     private String picture_link;
 

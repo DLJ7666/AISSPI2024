@@ -2,6 +2,7 @@ package aiss.videominer.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "Caption")
@@ -12,12 +13,18 @@ public class Caption {
     @JsonProperty("id")
     private long id;
 
+    @Column(name="name")
     @JsonProperty("name")
     private String name;
 
+    @Column(name="language")
     @JsonProperty("language")
     private String language;
 
+    public Caption(String name, String language) {
+        this.name = name;
+        this.language = language;
+    }
 
     public Long getId() {
         return id;

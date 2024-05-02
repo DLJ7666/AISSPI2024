@@ -28,7 +28,8 @@ public class ChannelController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public Channel create(@Valid @RequestBody Channel channel){
-        return channelRepository.save(new Channel());
+        return channelRepository.save(new Channel(channel.getName(), channel.getDescription(),
+                channel.getCreatedTime()));
     }
 
     //Obtener un canal con su id
