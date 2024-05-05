@@ -92,7 +92,7 @@ public class Video {
         this.captions = captions;
     }
 
-    public void addCaption(Caption caption) {this.captions.add(caption)}
+    public void addCaption(Caption caption) {this.captions.add(caption);}
 
     @Override
     public String toString() {
