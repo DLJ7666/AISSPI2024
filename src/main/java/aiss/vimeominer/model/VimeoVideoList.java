@@ -14,7 +14,7 @@ public class VimeoVideoList {
     @JsonProperty("page")
     private Integer pagina;
 
-    @JsonProperty("per_pagina")
+    @JsonProperty("per_page")
     private Integer elemPorPag;
 
     @JsonProperty("data")
