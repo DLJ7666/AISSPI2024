@@ -82,6 +82,8 @@ public class Channel {
         this.videos = videos;
     }
 
+    public void addVideo(Video video) { this.videos.add(video); }
+
     @Override
     public String toString() {
         return "Channel{" +
