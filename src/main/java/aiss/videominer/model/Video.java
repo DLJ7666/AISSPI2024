@@ -82,6 +82,8 @@ public class Video {
         this.comments = comments;
     }
 
+    public void addComment(Comment comment) {this.comments.add(comment);}
+
     public List<Caption> getCaptions() {
         return captions;
     }
@@ -89,6 +91,8 @@ public class Video {
     public void setCaptions(List<Caption> captions) {
         this.captions = captions;
     }
+
+    public void addCaption(Caption caption) {this.captions.add(caption)}
 
     @Override
     public String toString() {
