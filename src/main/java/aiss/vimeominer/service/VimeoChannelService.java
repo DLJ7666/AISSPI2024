@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 
 import org.springframework.http.HttpHeaders;
 
+import java.util.List;
+
 @Service
 public class VimeoChannelService {
 
@@ -32,6 +34,19 @@ public class VimeoChannelService {
 
         if(response.getBody() != null){
             res = response.getBody();
+        }
+        return res;
+    }
+
+    public List<Commit> obtenerCommitsConToken(String owner, String repo) {
+        List<Commit> res = null;
+        String uri = String.format("https://api.github.com/repos/%s/%s/commits", owner, repo);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + token);
+        HttpEntity<AllCommits> request = new HttpEntity<>(null, headers);
+        ResponseEntity<AllCommits> response = restTemplate.exchange(uri, HttpMethod.GET, request, AllCommits.class);
+        if (response.getBody() != null) {
+            res = response.getBody().getCommits();
         }
         return res;
     }
