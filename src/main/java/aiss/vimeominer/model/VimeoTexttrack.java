@@ -6,6 +6,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class VimeoTexttrack {
 
+    @JsonProperty("uri")
+    private String uri;
+
     @JsonProperty("name")
     private String name;
 
@@ -16,6 +19,10 @@ public class VimeoTexttrack {
         this.name = name;
         this.language = language;
     }
+
+    public String getUri() {return uri;}
+
+    public void setUri(String uri) {this.uri = uri;}
 
     public String getName() {
         return name;
@@ -33,10 +40,12 @@ public class VimeoTexttrack {
         this.language = language;
     }
 
+    public String getId() { return this.uri.split("/")[2]; }
+
     @Override
     public String toString() {
-        return "VimeoTexttrack{" +
-                "name='" + name + '\'' +
+        return "VimeoTexttrack{id='" + getId() +
+                "', name='" + name + '\'' +
                 ", language='" + language + '\'' +
                 '}';
     }
