@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class VimeoComment {
 
+
     @JsonProperty("text")
     private String text;
 
@@ -15,11 +16,19 @@ public class VimeoComment {
     @JsonProperty("user")
     private VimeoUser user;
 
-    public VimeoComment(String text, String createdOn, VimeoUser user) {
+    @JsonProperty("uri")
+    private String uri;
+
+    public VimeoComment(String uri, String text, String createdOn, VimeoUser user) {
+        this.uri = uri;
         this.text = text;
         this.createdOn = createdOn;
         this.user = user;
     }
+
+    public String getUri() { return uri; }
+
+    public void setUri(String uri) { this.uri = uri; }
 
     public String getText() {
         return text;
@@ -45,10 +54,12 @@ public class VimeoComment {
         this.user = user;
     }
 
+    public String getId() { return this.uri.split("/")[2]; }
+
     @Override
     public String toString() {
-        return "VimeoComment{" +
-                "text='" + text + '\'' +
+        return "VimeoComment{id='"+ getId() +
+                "', text='" + text + '\'' +
                 ", createdOn='" + createdOn + '\'' +
                 ", user=" + user +
                 '}';
