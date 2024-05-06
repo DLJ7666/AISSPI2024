@@ -2,6 +2,7 @@ package videominer.controller;
 
 import videominer.exceptions.CommentNotFoundException;
 import videominer.model.Comment;
+import videominer.repository.ChannelRepository;
 import videominer.repository.CommentRepository;
 import videominer.repository.UserRepository;
 import videominer.repository.VideoRepository;
@@ -14,18 +15,19 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Optional;
 
+// Uri: http://localhost:8080/api/videominer/channels/{channelId}/videos/{videoId}/comments
 @RestController
-@RequestMapping("/api/videominer/comments")
+@RequestMapping("/api/videominer/channels")
 public class CommentController {
 
     @Autowired
+    ChannelRepository channelRepository;
+
+    @Autowired
+    VideoRepository videoRepository;
+
+    @Autowired
     CommentRepository commentRepository;
-
-    @Autowired
-    VideoRepository  videoRepository;
-
-    @Autowired
-    UserRepository userRepository;
 
     //Obtener un comentario con su id
     //GET http://localhost:8080/videominer/comments/:id

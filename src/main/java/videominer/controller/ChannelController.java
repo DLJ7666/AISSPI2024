@@ -1,6 +1,5 @@
 package videominer.controller;
 
-
 import videominer.exceptions.ChannelNotFoundException;
 import videominer.model.Channel;
 import videominer.repository.ChannelRepository;
@@ -13,15 +12,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+// Uri: http://localhost:8080/api/videominer/channels
 @RestController
 @RequestMapping("/api/videominer/channels")
 public class ChannelController {
 
     @Autowired
     ChannelRepository channelRepository;
-
-    @Autowired
-    VideoRepository videoRepository;
 
     //Crear un canal
     //POST http://localhost:8080/videominer/channels

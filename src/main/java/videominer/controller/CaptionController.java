@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.Optional;
 
+// Uri: http://localhost:8080/api/videominer/channels/{channelId}/videos/{videoId}/captions
 @RestController
 @RequestMapping("/api/videominer/channels")
 public class CaptionController {

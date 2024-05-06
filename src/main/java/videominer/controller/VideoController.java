@@ -15,21 +15,16 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Optional;
 
+// Uri: http://localhost:8080/api/videominer/channels/{channelId}/videos
 @RestController
 @RequestMapping("/api/videominer/videos")
 public class  VideoController {
 
     @Autowired
-    VideoRepository videoRepository;
-
-    @Autowired
     ChannelRepository channelRepository;
 
     @Autowired
-    CaptionRepository captionRepository;
-
-    @Autowired
-    CommentRepository commentRepository;
+    VideoRepository videoRepository;
 
     //Obtener un vídeo con su id
     //GET http://localhost:8080/videominer/videos/:id
