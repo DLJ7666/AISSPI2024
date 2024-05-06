@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/comments")
+@RequestMapping("/api/videominer/comments")
 public class CommentController {
 
     @Autowired
