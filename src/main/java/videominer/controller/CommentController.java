@@ -30,7 +30,6 @@ public class CommentController {
     CommentRepository commentRepository;
 
     //Obtener un comentario con su id
-    //GET http://localhost:8080/videominer/comments/:id
     @GetMapping("/{id}")
     public Comment findOne(@PathVariable Long id) throws CommentNotFoundException {
         Optional<Comment> comment = commentRepository.findById(id);
