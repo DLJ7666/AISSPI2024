@@ -38,6 +38,18 @@ public class ChannelController {
         if (channel.isEmpty()) {throw new ChannelNotFoundException();}
         return channel.get();
     }
+    //Este codigo no estoy seguro d q funcione bien asi q no me atrevo a borrar el otr y lo pongo en coment
+    /*
+    @GetMapping("/{id}")
+    public Channel findOne(@PathVariable Long id) throws ChannelNotFoundException {
+        Caption res = null;
+        if (channel.isPresent()) {
+            Optional<Channel> channel = channelRepository.findById(id);
+         res = channel.get();
+        } else { throw new ChannelNotFoundException(); }
+        return res;
+    }
+    */
 
     //Obtener todos los canales
     //GET http://localhost:8080/videominer/channels
