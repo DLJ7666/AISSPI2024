@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -41,6 +42,15 @@ public class Video {
     @JoinColumn(name = "videoId")
     @NotNull(message = "Video captions cannot be null")
     private List<Caption> captions;
+
+    public Video(Long id, String name, String description, String releaseTime) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.releaseTime = releaseTime;
+        this.comments = new ArrayList<>();
+        this.captions = new ArrayList<>();
+    }
 
     public Long getId() {
         return id;
