@@ -90,7 +90,7 @@ public class CommentController {
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PutMapping("/{channelId}/videos/{videoId}/captions/{commentId}")
+    @PutMapping("/{channelId}/videos/{videoId}/comments/{commentId}")
     public void updateComment(@PathVariable Long channelId, @PathVariable Long videoId, @PathVariable Long commentId,
                               @Valid @RequestBody Comment updatedComment)
             throws ChannelNotFoundException, VideoNotFoundException, CommentNotFoundException {
