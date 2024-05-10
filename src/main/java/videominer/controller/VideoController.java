@@ -45,8 +45,7 @@ public class VideoController {
     }
 
     @GetMapping("/{channelId}/videos")
-    public List<Video> readVideos(@PathVariable Long channelId)
-            throws ChannelNotFoundException {
+    public List<Video> readVideos(@PathVariable Long channelId) throws ChannelNotFoundException {
         List<Video> res = null;
         Optional<Channel> channel = channelRepository.findById(channelId);
         if (channel.isPresent()) {
