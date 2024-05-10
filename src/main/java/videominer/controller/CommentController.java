@@ -1,16 +1,16 @@
 package videominer.controller;
 
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import videominer.exceptions.ChannelNotFoundException;
 import videominer.exceptions.CommentNotFoundException;
+import videominer.exceptions.VideoNotFoundException;
+import videominer.model.Channel;
 import videominer.model.Comment;
-import videominer.repository.ChannelRepository;
-import videominer.repository.CommentRepository;
-import videominer.repository.UserRepository;
-import videominer.repository.VideoRepository;
+import videominer.model.Video;
+import videominer.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,17 +29,84 @@ public class CommentController {
     @Autowired
     CommentRepository commentRepository;
 
-    //Obtener un comentario con su id
-    @GetMapping("/{id}")
-    public Comment findOne(@PathVariable Long id) throws CommentNotFoundException {
-        Optional<Comment> comment = commentRepository.findById(id);
-        if(comment.isEmpty()) {throw new CommentNotFoundException();}
-        return comment.get();
+    @GetMapping("/{channelId}/videos/{videoId}/comments/{commentId}")
+    public Comment readComment(@PathVariable Long channelId, @PathVariable Long videoId, @PathVariable Long commentId)
+            throws CommentNotFoundException, ChannelNotFoundException, VideoNotFoundException {
+        Comment res = null;
+        Optional<Channel> channel = channelRepository.findById(channelId);
+        if (channel.isPresent()) {
+            Optional<Video> video = videoRepository.findById(videoId);
+            if (video.isPresent()) {
+                Optional<Comment> comment = commentRepository.findById(commentId);
+                if (comment.isEmpty()) {throw new CommentNotFoundException(); }
+                res = comment.get();
+            } else { throw new VideoNotFoundException(); }
+        } else { throw new ChannelNotFoundException(); }
+        return res;
     }
 
-    //Obtener todos los comentarios
-    //GET http://localhost:8080/videominer/comments
+    @GetMapping("/{channelId}/videos/{videoId}/comments")
+    public List<Comment> readComments(@PathVariable Long channelId, @PathVariable Long videoId)
+            throws ChannelNotFoundException, VideoNotFoundException {
+        List<Comment> res = null;
+        Optional<Channel> channel = channelRepository.findById(channelId);
+        if (channel.isPresent()) {
+            Optional<Video> video = videoRepository.findById(videoId);
+            if (video.isPresent()) {
+                res = video.get().getComments();
+            } else { throw new VideoNotFoundException(); }
+        } else { throw new ChannelNotFoundException(); }
+        return res;
+    }
 
-    @GetMapping
-    public List<Comment> findAll(){return commentRepository.findAll();}
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("/{channelId}/videos/{videoId}/comments")
+    public Comment createComment(@PathVariable Long channelId, @PathVariable Long videoId,
+                                 @Valid @RequestBody Comment comment) throws ChannelNotFoundException,
+            VideoNotFoundException {
+        Optional<Channel> channel = channelRepository.findById(channelId);
+        if (channel.isPresent()) {
+            Optional<Video> video = videoRepository.findById(videoId);
+            if (video.isPresent()) {
+                video.get().addComment(comment);
+                return commentRepository.save(comment);
+            } else { throw new VideoNotFoundException(); }
+        } else { throw new ChannelNotFoundException(); }
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{channelId}/videos/{videoId}/comments/{commentId}")
+    public void deleteComment(@PathVariable Long channelId, @PathVariable Long videoId, @PathVariable Long commentId)
+            throws ChannelNotFoundException, VideoNotFoundException, CommentNotFoundException {
+        Optional<Channel> channel = channelRepository.findById(channelId);
+        if (channel.isPresent()) {
+            Optional<Video> video = videoRepository.findById(videoId);
+            if (video.isPresent()) {
+                if (commentRepository.existsById(commentId)){
+                    commentRepository.deleteById(commentId);
+                } else {throw new CommentNotFoundException(); }
+            } else { throw new VideoNotFoundException(); }
+        } else { throw new ChannelNotFoundException(); }
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PutMapping("/{channelId}/videos/{videoId}/captions/{commentId}")
+    public void updateComment(@PathVariable Long channelId, @PathVariable Long videoId, @PathVariable Long commentId,
+                              @Valid @RequestBody Comment updatedComment)
+            throws ChannelNotFoundException, VideoNotFoundException, CommentNotFoundException {
+        Optional<Channel> channel = channelRepository.findById(channelId);
+        if (channel.isPresent()) {
+            Optional<Video> video = videoRepository.findById(videoId);
+            if (video.isPresent()) {
+                Optional<Comment> toUpdateComment =commentRepository.findById(commentId);
+                if (toUpdateComment.isPresent()){
+                    Comment updatingComment = toUpdateComment.get();
+                    updatingComment.setText(updatedComment.getText());
+                    updatingComment.setCreatedOn(updatedComment.getCreatedOn());
+                    updatingComment.setAuthor(updatedComment.getAuthor());
+                } else {throw new CommentNotFoundException(); }
+            } else { throw new VideoNotFoundException(); }
+        } else { throw new ChannelNotFoundException(); }
+    }
+
 }
