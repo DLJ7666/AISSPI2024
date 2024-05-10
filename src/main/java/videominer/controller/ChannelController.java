@@ -1,9 +1,10 @@
 package videominer.controller;
 
+import videominer.exceptions.CaptionNotFoundException;
 import videominer.exceptions.ChannelNotFoundException;
+import videominer.exceptions.VideoNotFoundException;
 import videominer.model.Channel;
 import videominer.repository.ChannelRepository;
-import videominer.repository.VideoRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-// Uri: http://localhost:8080/api/videominer/channels
 @RestController
 @RequestMapping("/api/videominer/channels")
 public class ChannelController {
@@ -20,40 +20,54 @@ public class ChannelController {
     @Autowired
     ChannelRepository channelRepository;
 
-    //Crear un canal
-    //POST http://localhost:8080/videominer/channels
-
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping
-    public Channel create(@Valid @RequestBody Channel channel){
-        return channelRepository.save(new Channel(channel.getName(), channel.getDescription(),
-                channel.getCreatedTime()));
-    }
-
-    //Obtener un canal con su id
-    //GET http://localhost:8080/videominer/channels/:id
-    @GetMapping("/{id}")
-    public Channel findOne(@PathVariable Long id) throws ChannelNotFoundException {
-        Optional<Channel> channel = channelRepository.findById(id);
-        if (channel.isEmpty()) {throw new ChannelNotFoundException();}
-        return channel.get();
-    }
-    //Este codigo no estoy seguro d q funcione bien asi q no me atrevo a borrar el otr y lo pongo en coment
-    /*
-    @GetMapping("/{id}")
-    public Channel findOne(@PathVariable Long id) throws ChannelNotFoundException {
-        Caption res = null;
-        if (channel.isPresent()) {
-            Optional<Channel> channel = channelRepository.findById(id);
-         res = channel.get();
-        } else { throw new ChannelNotFoundException(); }
+    @GetMapping("/{channelId}")
+    public Channel readCaption(@PathVariable Long channelId)
+            throws ChannelNotFoundException{
+        Channel res = null;
+        Optional<Channel> channel = channelRepository.findById(channelId);
+        if (channel.isEmpty()) {
+            throw new ChannelNotFoundException();
+        }
+        res = channel.get();
         return res;
     }
-    */
 
-    //Obtener todos los canales
-    //GET http://localhost:8080/videominer/channels
+    @GetMapping("/")
+    public List<Channel> readChannels() {
+        return channelRepository.findAll();
+    }
 
-    @GetMapping
-    public List<Channel> findAll(){return channelRepository.findAll();}
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("/")
+    public Channel createChannel(@Valid @RequestBody Channel channel) {
+        return channelRepository.save(channel);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{channelId}")
+    public void deleteChannel(@PathVariable Long channelId)
+            throws ChannelNotFoundException {
+                if (channelRepository.existsById(channelId)) {
+                    channelRepository.deleteById(channelId);
+                } else {
+            throw new ChannelNotFoundException();
+        }
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PutMapping("/{channelId}")
+    public void updateChannel(@PathVariable Long channelId,@Valid @RequestBody Channel updatedChannel)
+            throws ChannelNotFoundException {
+
+        Optional<Channel> channel = channelRepository.findById(channelId);
+        if(channel.isPresent()){
+            Channel updatingChannel = channel.get();
+            updatingChannel.setName(updatedChannel.getName());
+            updatingChannel.setDescription(updatedChannel.getDescription());
+            updatingChannel.setCreatedTime(updatedChannel.getCreatedTime());
+            updatingChannel.setVideos(updatedChannel.getVideos());
+        } else {
+            throw new ChannelNotFoundException();
+        }
+    }
 }
