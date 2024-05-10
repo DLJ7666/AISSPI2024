@@ -23,7 +23,7 @@ public class ChannelController {
     ChannelRepository channelRepository;
 
     @GetMapping("/{channelId}")
-    public Channel readCaption(@PathVariable Long channelId)
+    public Channel readChannel(@PathVariable Long channelId)
             throws ChannelNotFoundException{
         Channel res = null;
         Optional<Channel> channel = channelRepository.findById(channelId);
@@ -34,13 +34,13 @@ public class ChannelController {
         return res;
     }
 
-    @GetMapping("/")
+    @GetMapping
     public List<Channel> readChannels() {
         return channelRepository.findAll();
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/")
+    @PostMapping
     public Channel createChannel(@Valid @RequestBody Channel channel) {
         return channelRepository.save(channel);
     }
