@@ -79,7 +79,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{channelId}/videos/{videoId}/comments/{commentId}/users/{userId}")
     public void deleteUser(@PathVariable Long channelId, @PathVariable Long videoId, @PathVariable Long commentId,@PathVariable Long userId)
-            throws ChannelNotFoundException, VideoNotFoundException, CommentNotFoundException {
+            throws ChannelNotFoundException, VideoNotFoundException, CommentNotFoundException,UserNotFoundException {
         Optional<Channel> channel = channelRepository.findById(channelId);
         if (channel.isPresent()) {
             Optional<Video> video = videoRepository.findById(videoId);
@@ -88,7 +88,7 @@ public class UserController {
                 if (comment.isPresent()) {
                     if (userRepository.existsById(userId)){
                         userRepository.deleteById(userId);
-                    } else {throw new CommentNotFoundException(); }
+                    } else {throw new UserNotFoundException(); }
                 } else { throw new CommentNotFoundException(); }
             } else { throw new VideoNotFoundException(); }
         } else { throw new ChannelNotFoundException(); }
@@ -96,7 +96,7 @@ public class UserController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{channelId}/videos/{videoId}/captions/{commentId}/users/{userId}")
-    public void updateComment(@PathVariable Long channelId, @PathVariable Long videoId, @PathVariable Long commentId,@PathVariable Long userId,
+    public void updateUser(@PathVariable Long channelId, @PathVariable Long videoId, @PathVariable Long commentId,@PathVariable Long userId,
                               @Valid @RequestBody User updatedUser)
             throws ChannelNotFoundException, VideoNotFoundException, CommentNotFoundException, UserNotFoundException {
         Optional<Channel> channel = channelRepository.findById(channelId);
