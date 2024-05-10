@@ -5,9 +5,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import videominer.exceptions.ChannelNotFoundException;
 import videominer.exceptions.CommentNotFoundException;
+import videominer.exceptions.UserNotFoundException;
 import videominer.exceptions.VideoNotFoundException;
 import videominer.model.Channel;
 import videominer.model.Comment;
+import videominer.model.User;
 import videominer.model.Video;
 import videominer.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,9 @@ public class CommentController {
 
     @Autowired
     CommentRepository commentRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     @GetMapping("/{channelId}/videos/{videoId}/comments/{commentId}")
     public Comment readComment(@PathVariable Long channelId, @PathVariable Long videoId, @PathVariable Long commentId)
@@ -62,8 +67,14 @@ public class CommentController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/{channelId}/videos/{videoId}/comments")
     public Comment createComment(@PathVariable Long channelId, @PathVariable Long videoId,
-                                 @Valid @RequestBody Comment comment) throws ChannelNotFoundException,
-            VideoNotFoundException {
+                                 @Valid @RequestBody Comment comment, @RequestParam("authorId") String userId)
+            throws ChannelNotFoundException, VideoNotFoundException, UserNotFoundException {
+        Optional<User> user = userRepository.findById(Long.valueOf(userId));
+        if(user.isEmpty()) {
+            throw new UserNotFoundException();
+        } else {
+            comment.setAuthor(user.get());
+        }
         Optional<Channel> channel = channelRepository.findById(channelId);
         if (channel.isPresent()) {
             Optional<Video> video = videoRepository.findById(videoId);
