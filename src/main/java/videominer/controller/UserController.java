@@ -22,7 +22,7 @@ import java.util.Optional;
 
 /// Uri: http://localhost:8080/api/videominer/users
 @RestController
-@RequestMapping("/api/videominer/channels")
+@RequestMapping("/api/videominer/users")
 public class UserController {
 
     @Autowired
