@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.List;
+
 @Entity
 @Table(name = "Comment")
 public class Comment {
@@ -26,6 +28,7 @@ public class Comment {
     @JoinColumn(name= "userId")
     @NotNull(message = "Comment author cannot be null")
     private User author;
+
 
     public Comment(String text, String createdOn, User author) {
         this.text = text;

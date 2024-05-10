@@ -23,7 +23,7 @@ public class ChannelController {
     ChannelRepository channelRepository;
 
     @GetMapping("/{channelId}")
-    public Channel readCaption(@PathVariable Long channelId)
+    public Channel readChannel(@PathVariable Long channelId)
             throws ChannelNotFoundException{
         Channel res = null;
         Optional<Channel> channel = channelRepository.findById(channelId);

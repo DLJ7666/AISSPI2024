@@ -32,7 +32,7 @@ public class VideoController {
 
 
     @GetMapping("/{channelId}/videos/{videoId}")
-    public Video readCaption(@PathVariable Long channelId, @PathVariable Long videoId)
+    public Video readVideo(@PathVariable Long channelId, @PathVariable Long videoId)
             throws ChannelNotFoundException, VideoNotFoundException {
         Video res = null;
         Optional<Channel> channel = channelRepository.findById(channelId);
@@ -69,7 +69,7 @@ public class VideoController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{channelId}/videos/{videoId}")
-    public void deleteCaption(@PathVariable Long channelId, @PathVariable Long videoId)
+    public void deleteVideo(@PathVariable Long channelId, @PathVariable Long videoId)
             throws ChannelNotFoundException, VideoNotFoundException{
         Optional<Channel> channel = channelRepository.findById(channelId);
         if (channel.isPresent()) {
