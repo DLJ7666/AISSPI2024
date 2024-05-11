@@ -2,7 +2,7 @@
 
 VideoMiner es una herramienta de minería de datos que permite cargar, procesar y analizar información sobre creadores de contenido multimedia alojados en distintas
 plataformas.Integra y almacena todos los datos en una base de
-datos Las distintas acciones que se pueden tomar son las siguientes:
+datos. Las distintas acciones que se pueden tomar son las siguientes:
 
 <h2>Subtítulos:</h2>
 
