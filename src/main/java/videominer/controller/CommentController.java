@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.Optional;
 
-// Uri: http://localhost:8080/api/videominer/channels/{channelId}/videos/{videoId}/comments
+// Uri: http://localhost:42000/api/videominer/channels/{channelId}/videos/{videoId}/comments
 @RestController
 @RequestMapping("/api/videominer/channels")
 public class CommentController {
@@ -35,7 +35,7 @@ public class CommentController {
     UserRepository userRepository;
 
     @GetMapping("/{channelId}/videos/{videoId}/comments/{commentId}")
-    public Comment readComment(@PathVariable Long channelId, @PathVariable Long videoId, @PathVariable Long commentId)
+    public Comment readComment(@PathVariable String channelId, @PathVariable String videoId, @PathVariable String commentId)
             throws CommentNotFoundException, ChannelNotFoundException, VideoNotFoundException {
         Comment res = null;
         Optional<Channel> channel = channelRepository.findById(channelId);
@@ -51,7 +51,7 @@ public class CommentController {
     }
 
     @GetMapping("/{channelId}/videos/{videoId}/comments")
-    public List<Comment> readComments(@PathVariable Long channelId, @PathVariable Long videoId)
+    public List<Comment> readComments(@PathVariable String channelId, @PathVariable String videoId)
             throws ChannelNotFoundException, VideoNotFoundException {
         List<Comment> res = null;
         Optional<Channel> channel = channelRepository.findById(channelId);
@@ -66,15 +66,9 @@ public class CommentController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/{channelId}/videos/{videoId}/comments")
-    public Comment createComment(@PathVariable Long channelId, @PathVariable Long videoId,
-                                 @Valid @RequestBody Comment comment, @RequestParam("authorId") String userId)
-            throws ChannelNotFoundException, VideoNotFoundException, UserNotFoundException {
-        Optional<User> user = userRepository.findById(Long.valueOf(userId));
-        if(user.isEmpty()) {
-            throw new UserNotFoundException();
-        } else {
-            comment.setAuthor(user.get());
-        }
+    public Comment createComment(@PathVariable String channelId, @PathVariable String videoId,
+                                 @Valid @RequestBody Comment comment)
+            throws ChannelNotFoundException, VideoNotFoundException {
         Optional<Channel> channel = channelRepository.findById(channelId);
         if (channel.isPresent()) {
             Optional<Video> video = videoRepository.findById(videoId);
@@ -87,7 +81,7 @@ public class CommentController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{channelId}/videos/{videoId}/comments/{commentId}")
-    public void deleteComment(@PathVariable Long channelId, @PathVariable Long videoId, @PathVariable Long commentId)
+    public void deleteComment(@PathVariable String channelId, @PathVariable String videoId, @PathVariable String commentId)
             throws ChannelNotFoundException, VideoNotFoundException, CommentNotFoundException {
         Optional<Channel> channel = channelRepository.findById(channelId);
         if (channel.isPresent()) {
@@ -102,7 +96,7 @@ public class CommentController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{channelId}/videos/{videoId}/comments/{commentId}")
-    public void updateComment(@PathVariable Long channelId, @PathVariable Long videoId, @PathVariable Long commentId,
+    public void updateComment(@PathVariable String channelId, @PathVariable String videoId, @PathVariable String commentId,
                               @Valid @RequestBody Comment updatedComment)
             throws ChannelNotFoundException, VideoNotFoundException, CommentNotFoundException {
         Optional<Channel> channel = channelRepository.findById(channelId);

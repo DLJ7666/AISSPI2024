@@ -13,9 +13,8 @@ import java.util.List;
 public class Video {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("id")
-    private Long id;
+    private String id;
 
     @JsonProperty("name")
     @Column(name="name")
@@ -56,7 +55,7 @@ public class Video {
         this.captions = new ArrayList<>();
     }
 
-    public Video(Long id, String name, String description, String releaseTime, List<Comment> comments,
+    public Video(String id, String name, String description, String releaseTime, List<Comment> comments,
                  List<Caption> captions) {
         this.id = id;
         this.name = name;
@@ -66,11 +65,11 @@ public class Video {
         this.captions = captions;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

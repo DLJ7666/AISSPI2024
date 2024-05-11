@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-// Uri: http://localhost:8080/api/videominer/channels
+// Uri: http://localhost:42000/api/videominer/channels
 @RestController
 @RequestMapping("/api/videominer/channels")
 public class ChannelController {
@@ -23,7 +23,7 @@ public class ChannelController {
     ChannelRepository channelRepository;
 
     @GetMapping("/{channelId}")
-    public Channel readChannel(@PathVariable Long channelId)
+    public Channel readChannel(@PathVariable String channelId)
             throws ChannelNotFoundException{
         Channel res = null;
         Optional<Channel> channel = channelRepository.findById(channelId);
@@ -47,7 +47,7 @@ public class ChannelController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{channelId}")
-    public void deleteChannel(@PathVariable Long channelId)
+    public void deleteChannel(@PathVariable String channelId)
             throws ChannelNotFoundException {
                 if (channelRepository.existsById(channelId)) {
                     channelRepository.deleteById(channelId);
@@ -58,7 +58,7 @@ public class ChannelController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{channelId}")
-    public void updateChannel(@PathVariable Long channelId,@Valid @RequestBody Channel updatedChannel)
+    public void updateChannel(@PathVariable String channelId,@Valid @RequestBody Channel updatedChannel)
             throws ChannelNotFoundException {
 
         Optional<Channel> channel = channelRepository.findById(channelId);

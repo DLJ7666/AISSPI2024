@@ -11,9 +11,8 @@ import java.util.List;
 public class Comment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("id")
-    private Long id;
+    private String id;
 
     @JsonProperty("text")
     @Column(columnDefinition="TEXT")
@@ -40,11 +39,18 @@ public class Comment {
         super();
     }
 
-    public Long getId() {
+    public Comment(String id, String text, String createdOn, User author) {
+        this.id = id;
+        this.text = text;
+        this.createdOn = createdOn;
+        this.author = author;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

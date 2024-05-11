@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.Optional;
 
-// Uri: http://localhost:8080/api/videominer/channels/{channelId}/videos/{videoId}/captions
+// Uri: http://localhost:42000/api/videominer/channels/{channelId}/videos/{videoId}/captions
 @RestController
 @RequestMapping("/api/videominer/channels")
 public class CaptionController {
@@ -32,8 +32,9 @@ public class CaptionController {
     CaptionRepository captionRepository;
 
     @GetMapping("/{channelId}/videos/{videoId}/captions/{captionId}")
-    public Caption readCaption(@PathVariable Long channelId, @PathVariable Long videoId, @PathVariable Long captionId)
-            throws CaptionNotFoundException, ChannelNotFoundException, VideoNotFoundException {
+    public Caption readCaption(@PathVariable String channelId, @PathVariable String videoId,
+                               @PathVariable String captionId) throws CaptionNotFoundException,
+            ChannelNotFoundException, VideoNotFoundException {
         Caption res = null;
         Optional<Channel> channel = channelRepository.findById(channelId);
         if (channel.isPresent()) {
@@ -48,7 +49,7 @@ public class CaptionController {
     }
 
     @GetMapping("/{channelId}/videos/{videoId}/captions")
-    public List<Caption> readCaptions(@PathVariable Long channelId, @PathVariable Long videoId)
+    public List<Caption> readCaptions(@PathVariable String channelId, @PathVariable String videoId)
             throws ChannelNotFoundException, VideoNotFoundException {
         List<Caption> res = null;
         Optional<Channel> channel = channelRepository.findById(channelId);
@@ -63,7 +64,7 @@ public class CaptionController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/{channelId}/videos/{videoId}/captions")
-    public Caption createCaption(@PathVariable Long channelId, @PathVariable Long videoId,
+    public Caption createCaption(@PathVariable String channelId, @PathVariable String videoId,
                                @Valid @RequestBody Caption caption) throws ChannelNotFoundException,
             VideoNotFoundException {
         Optional<Channel> channel = channelRepository.findById(channelId);
@@ -78,7 +79,7 @@ public class CaptionController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{channelId}/videos/{videoId}/captions/{captionId}")
-    public void deleteCaption(@PathVariable Long channelId, @PathVariable Long videoId, @PathVariable Long captionId)
+    public void deleteCaption(@PathVariable String channelId, @PathVariable String videoId, @PathVariable String captionId)
             throws ChannelNotFoundException, VideoNotFoundException, CaptionNotFoundException {
         Optional<Channel> channel = channelRepository.findById(channelId);
         if (channel.isPresent()) {
@@ -93,7 +94,7 @@ public class CaptionController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{channelId}/videos/{videoId}/captions/{captionId}")
-    public void updateCaption(@PathVariable Long channelId, @PathVariable Long videoId, @PathVariable Long captionId,
+    public void updateCaption(@PathVariable String channelId, @PathVariable String videoId, @PathVariable String captionId,
                               @Valid @RequestBody Caption updatedCaption)
             throws ChannelNotFoundException, VideoNotFoundException, CaptionNotFoundException {
         Optional<Channel> channel = channelRepository.findById(channelId);

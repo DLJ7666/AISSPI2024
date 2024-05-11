@@ -13,9 +13,8 @@ import java.util.List;
 public class Channel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("id")
-    private Long id;
+    private String id;
 
     @Column(name="name")
     @JsonProperty("name")
@@ -48,7 +47,7 @@ public class Channel {
         this.videos = new ArrayList<>();
     }
 
-    public Channel(Long id, String name, String description, String createdTime, List<Video> videos) {
+    public Channel(String id, String name, String description, String createdTime, List<Video> videos) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -56,9 +55,9 @@ public class Channel {
         this.videos = videos;
     }
 
-    public Long getId() {return id;}
+    public String getId() {return id;}
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

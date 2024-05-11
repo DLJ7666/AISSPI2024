@@ -20,7 +20,7 @@ import videominer.repository.VideoRepository;
 import java.util.List;
 import java.util.Optional;
 
-/// Uri: http://localhost:8080/api/videominer/users
+/// Uri: http://localhost:42000/api/videominer/users
 @RestController
 @RequestMapping("/api/videominer/users")
 public class UserController {

@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.Optional;
 
-// Uri: http://localhost:8080/api/videominer/channels/{channelId}/videos
+// Uri: http://localhost:42000/api/videominer/channels/{channelId}/videos
 
 @RestController
 @RequestMapping("/api/videominer/channels")
@@ -32,7 +32,7 @@ public class VideoController {
 
 
     @GetMapping("/{channelId}/videos/{videoId}")
-    public Video readVideo(@PathVariable Long channelId, @PathVariable Long videoId)
+    public Video readVideo(@PathVariable String channelId, @PathVariable String videoId)
             throws ChannelNotFoundException, VideoNotFoundException {
         Video res = null;
         Optional<Channel> channel = channelRepository.findById(channelId);
@@ -45,7 +45,7 @@ public class VideoController {
     }
 
     @GetMapping("/{channelId}/videos")
-    public List<Video> readVideos(@PathVariable Long channelId) throws ChannelNotFoundException {
+    public List<Video> readVideos(@PathVariable String channelId) throws ChannelNotFoundException {
         List<Video> res = null;
         Optional<Channel> channel = channelRepository.findById(channelId);
         if (channel.isPresent()) {
@@ -56,8 +56,8 @@ public class VideoController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/{channelId}/videos")
-    public Video createVideo(@PathVariable Long channelId,
-                                 @Valid @RequestBody Video video) throws ChannelNotFoundException {
+    public Video createVideo(@PathVariable String channelId, @Valid @RequestBody Video video)
+            throws ChannelNotFoundException {
         Optional<Channel> channel = channelRepository.findById(channelId);
         if (channel.isPresent()) {
             channel.get().addVideo(video);
@@ -68,7 +68,7 @@ public class VideoController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{channelId}/videos/{videoId}")
-    public void deleteVideo(@PathVariable Long channelId, @PathVariable Long videoId)
+    public void deleteVideo(@PathVariable String channelId, @PathVariable String videoId)
             throws ChannelNotFoundException, VideoNotFoundException{
         Optional<Channel> channel = channelRepository.findById(channelId);
         if (channel.isPresent()) {
@@ -80,7 +80,7 @@ public class VideoController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{channelId}/videos/{videoId}")
-    public void updateVideo(@PathVariable Long channelId, @PathVariable Long videoId,
+    public void updateVideo(@PathVariable String channelId, @PathVariable String videoId,
                               @Valid @RequestBody Video updatedVideo)
             throws ChannelNotFoundException, VideoNotFoundException, CaptionNotFoundException {
         Optional<Channel> channel = channelRepository.findById(channelId);
