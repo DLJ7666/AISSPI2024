@@ -23,9 +23,9 @@ public class AllCommentController {
 
 
     @GetMapping("{commentId}")
-    public Comment readComment(@PathVariable String captionId) throws CommentNotFoundException {
+    public Comment readComment(@PathVariable String commentId) throws CommentNotFoundException {
         Comment res = null;
-        Optional<Comment> video = commentRepository.findById(captionId);
+        Optional<Comment> video = commentRepository.findById(commentId);
         if (video.isEmpty()) {throw new CommentNotFoundException(); }
         res = video.get();
         return res;
