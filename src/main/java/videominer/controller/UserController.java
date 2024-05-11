@@ -25,14 +25,6 @@ import java.util.Optional;
 @RequestMapping("/api/videominer/users")
 public class UserController {
 
-    @Autowired
-    ChannelRepository channelRepository;
-
-    @Autowired
-    VideoRepository videoRepository;
-
-    @Autowired
-    CommentRepository commentRepository;
 
     @Autowired
     UserRepository userRepository;
