@@ -1,8 +1,6 @@
 package videominer.controller;
 
-import videominer.exceptions.CaptionNotFoundException;
 import videominer.exceptions.ChannelNotFoundException;
-import videominer.exceptions.VideoNotFoundException;
 import videominer.model.Channel;
 import videominer.repository.ChannelRepository;
 import jakarta.validation.Valid;
