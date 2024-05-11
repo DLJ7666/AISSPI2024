@@ -25,6 +25,10 @@ public class Caption {
         this.language = language;
     }
 
+    public Caption() {
+        super();
+    }
+
     public Long getId() {
         return id;
     }

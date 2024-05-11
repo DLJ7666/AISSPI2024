@@ -44,12 +44,26 @@ public class Video {
     private List<Caption> captions;
 
     public Video(Long id, String name, String description, String releaseTime) {
-        this.id = id;
         this.name = name;
         this.description = description;
         this.releaseTime = releaseTime;
         this.comments = new ArrayList<>();
         this.captions = new ArrayList<>();
+    }
+
+    public Video() {
+        this.comments = new ArrayList<>();
+        this.captions = new ArrayList<>();
+    }
+
+    public Video(Long id, String name, String description, String releaseTime, List<Comment> comments,
+                 List<Caption> captions) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.releaseTime = releaseTime;
+        this.comments = comments;
+        this.captions = captions;
     }
 
     public Long getId() {

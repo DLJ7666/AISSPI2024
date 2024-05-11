@@ -44,6 +44,18 @@ public class Channel {
         this.videos = new ArrayList<>();
     }
 
+    public Channel() {
+        this.videos = new ArrayList<>();
+    }
+
+    public Channel(Long id, String name, String description, String createdTime, List<Video> videos) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.createdTime = createdTime;
+        this.videos = videos;
+    }
+
     public Long getId() {return id;}
 
     public void setId(Long id) {

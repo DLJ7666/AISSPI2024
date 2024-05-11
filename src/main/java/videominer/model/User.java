@@ -36,6 +36,10 @@ public class User {
         this.picture_link = picture_link;
     }
 
+    public User() {
+        super();
+    }
+
 
     public Long getId() {
         return id;
