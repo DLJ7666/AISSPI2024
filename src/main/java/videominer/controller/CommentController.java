@@ -73,7 +73,6 @@ public class CommentController {
         if (channel.isPresent()) {
             Optional<Video> video = videoRepository.findById(videoId);
             if (video.isPresent()) {
-                video.get().addComment(comment);
                 return commentRepository.save(comment);
             } else { throw new VideoNotFoundException(); }
         } else { throw new ChannelNotFoundException(); }

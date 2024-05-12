@@ -60,7 +60,6 @@ public class VideoController {
             throws ChannelNotFoundException {
         Optional<Channel> channel = channelRepository.findById(channelId);
         if (channel.isPresent()) {
-            channel.get().addVideo(video);
             return videoRepository.save(video);
         } else {throw new ChannelNotFoundException();}
 

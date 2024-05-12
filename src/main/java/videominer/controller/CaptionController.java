@@ -71,7 +71,6 @@ public class CaptionController {
         if (channel.isPresent()) {
             Optional<Video> video = videoRepository.findById(videoId);
             if (video.isPresent()) {
-                video.get().addCaption(caption);
                 return captionRepository.save(caption);
             } else { throw new VideoNotFoundException(); }
         } else { throw new ChannelNotFoundException(); }
