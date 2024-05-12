@@ -42,7 +42,7 @@ public class Video {
     @NotNull(message = "Video captions cannot be null")
     private List<Caption> captions;
 
-    public Video(Long id, String name, String description, String releaseTime) {
+    public Video(String name, String description, String releaseTime) {
         this.name = name;
         this.description = description;
         this.releaseTime = releaseTime;
