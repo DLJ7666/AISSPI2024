@@ -89,11 +89,12 @@ public class Channel {
         return videos;
     }
 
-    public void setVideos(List<Video> videos) {
-        this.videos = videos;
-    }
+    public void setVideos(List<Video> videos) { this.videos = videos; }
 
-    public void addVideo(Video video) { this.videos.add(video); }
+    public Video addVideo(Video video) {
+        this.videos.add(video);
+        return video;
+    }
 
     @Override
     public String toString() {
